@@ -102,8 +102,5 @@ public class JeuDeCartes {
 		public Carte getCarte() {
 			return carte;
 		}
-		
-		
 	}
-
 }
