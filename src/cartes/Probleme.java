@@ -39,5 +39,11 @@ public abstract class Probleme extends Carte {
 		}
 	}
 	
-
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Probleme probleme) {
+			return super.equals(probleme);
+		}
+		return false;
+	}
 }

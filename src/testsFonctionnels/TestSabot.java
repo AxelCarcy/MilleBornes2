@@ -53,7 +53,7 @@ public class TestSabot {
 
 	public static void main(String[] args) {
 		TestSabot testPioche = new TestSabot();
-		testPioche.questionA();
+//		testPioche.questionA();
 //		testPioche.questionB();
 //		testPioche.questionC();
 	}

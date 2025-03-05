@@ -5,18 +5,17 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
 public class Sabot implements Iterable<Carte> {
-	
+
 	Carte[] cartes;
 	private int nbCartes;
-	private int nbOperations;
-	
+	private int nbOperations = 0;
+
 	public Sabot(Carte[] cartes) {
 		this.cartes = cartes;
 		this.nbCartes = cartes.length;
 	}
-	
+
 	public int getNbCartes() {
 		return nbCartes;
 	}
@@ -24,7 +23,7 @@ public class Sabot implements Iterable<Carte> {
 	public boolean estVide() {
 		return nbCartes == 0;
 	}
-	
+
 	public void ajouterCarte(Carte newCarte) {
 		if (nbCartes >= cartes.length) {
 			throw new IllegalArgumentException("Le sabot est plein");
@@ -33,33 +32,31 @@ public class Sabot implements Iterable<Carte> {
 		nbCartes++;
 		nbOperations++;
 	}
-	
+
 	public Carte piocher() {
 		Iterator<Carte> it = iterator();
-
-		if (!it.hasNext()) {
-			throw new IllegalArgumentException("Le sabot est vide");
+		Carte carte = null;
+		if (it.hasNext()) {
+			carte = it.next();
+			it.remove();
 		}
-
-		Carte carte = it.next();
-		it.remove();
 		return carte;
 	}
-	
+
 	public Iterator<Carte> iterator() {
 		return new Iterateur();
 	}
-	
-	private class Iterateur implements Iterator<Carte>{
+
+	private class Iterateur implements Iterator<Carte> {
 		private int indiceIterateur = 0;
 		private boolean nextEffectue = false;
 		private int nbOperationsReference = nbOperations;
-		
+
 		@Override
 		public boolean hasNext() {
 			return indiceIterateur < nbCartes;
 		}
-		
+
 		@Override
 		public Carte next() {
 			verificationConcurrence();
@@ -73,23 +70,23 @@ public class Sabot implements Iterable<Carte> {
 				throw new NoSuchElementException();
 			}
 		}
-		
+
 		@Override
 		public void remove() {
 			verificationConcurrence();
 			if (nbCartes < 1 || !nextEffectue) {
 				throw new IllegalStateException();
 			}
-			
+
 			for (int i = indiceIterateur - 1; i < nbCartes - 1; i++) {
 				cartes[i] = cartes[i + 1];
 			}
 			indiceIterateur--;
-		    nbCartes--;
-		    nbOperations++;
-		    nbOperationsReference++;
+			nbCartes--;
+			nbOperations++;
+			nbOperationsReference++;
 		}
-		
+
 		public void verificationConcurrence() {
 			if (nbOperations != nbOperationsReference) {
 				throw new ConcurrentModificationException();

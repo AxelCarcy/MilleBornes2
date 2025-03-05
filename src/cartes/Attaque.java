@@ -1,17 +1,24 @@
 package cartes;
 
 public class Attaque extends Bataille {
-	
+
 	public Attaque(Type type) {
 		super(type);
 	}
-	
+
+	Type type = super.getType();
+
 	@Override
 	public String toString() {
-		Type type = super.getType();
 		return type.getAttaque();
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Attaque attaque) {
+			return type.equals(attaque.type);
+		}
+		return false;
+	}
 
 }
