@@ -58,48 +58,40 @@ public class GestionCartes {
 		return true;
 	}
 	
-//	public static List<Carte> rassembler2(List<Carte> liste) {
+	// REVENIR PLUS TARD
+//	public static List<Carte> rassembler3(List<Carte> liste) {
 //		ListIterator<Carte> it = liste.listIterator();
 //		List<Carte> listeRassemblee = new ArrayList<>();
 //		while (it.hasNext()) {
 //			Carte elementActuel = it.next();
-//			if (it.hasNext()) {
-//				Carte prochainElement = it.next();
-//				if (prochainElement.equals(elementActuel)) {
-//					listeRassemblee.add(elementActuel);
-//					while (prochainElement.equals(elementActuel) && it.hasNext()) { 
-//						prochainElement = it.next();
-//					}
-//					elementActuel = it.previous();
-//				}
-//				listeRassemblee.add(elementActuel);
-//			}
+//			ListIterator<Carte> it2 = liste.listIterator(it.nextIndex());
+//			
 //		}
 //		return listeRassemblee;
 //	}
 	
-//	public static List<Carte> rassembler3(List<Carte> liste) {
-//        List<Carte> resultat = new ArrayList<>();
-//        ListIterator<Carte> it = liste.listIterator();
-//        
-//        while (it.hasNext()) {
-//            Carte elementActuel = it.next();
-//            if (!resultat.contains(elementActuel)) {
-//                resultat.add(elementActuel);
-//                ListIterator<Carte> it2 = liste.listIterator(it.nextIndex());
-//                while (it2.hasNext()) {
-//                    Carte prochainElement = it2.next();
-//                    if (it.hasNext() && prochainElement.equals(elementActuel)) {
-//                        resultat.add(prochainElement);
-//                    }
-//                }
-//            }
-//        }
-//        
-//        return resultat;
-//    }
-	
 	public static List<Carte> rassembler(List<Carte> liste) {
+        List<Carte> resultat = new ArrayList<>();
+        ListIterator<Carte> it = liste.listIterator();
+        
+        while (it.hasNext()) {
+            Carte elementActuel = it.next();
+            if (!resultat.contains(elementActuel)) {
+                resultat.add(elementActuel);
+                ListIterator<Carte> it2 = liste.listIterator(it.nextIndex());
+                while (it2.hasNext()) {
+                    Carte prochainElement = it2.next();
+                    if (it.hasNext() && prochainElement.equals(elementActuel)) {
+                        resultat.add(prochainElement);
+                    }
+                }
+            }
+        }
+        
+        return resultat;
+    }
+	
+	public static List<Carte> rassembler2(List<Carte> liste) {
 		Map<Carte, Integer> occurences = new LinkedHashMap<>();
 		
 		for (Carte element : liste) {
@@ -136,9 +128,7 @@ public class GestionCartes {
 	
 	public static List<Carte> tabToList(Carte[] tab) {
 		List<Carte> liste = new ArrayList<>();
-		for (Carte carte : tab) {
-			liste.add(carte);
-		}
+			Collections.addAll(liste, tab);
 		return liste;
 	}
 	
