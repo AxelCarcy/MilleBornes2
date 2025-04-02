@@ -42,4 +42,8 @@ public class Joueur {
 		mainJoueur.prendre(carte);
 		return carte;
 	}
+	
+	public int donnerKmParcourus() {
+		return zoneDeJeu.donnerKmParcourus();
+	}
 }
