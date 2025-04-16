@@ -3,48 +3,39 @@ package jeu;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import cartes.*;
 
 public class ZoneDeJeu {
-	private List<Limite> pileLimites;
-	private List<Bataille> pileBataille;
-	private Collection<Borne> collectionBornes;
+	private List<Limite> pileLimites = new LinkedList<>();
+	private List<Bataille> pileBataille = new LinkedList<>();
+	private Collection<Borne> collectionBornes = new ArrayList<>();
 	Set <Botte> bottesObtenues = new HashSet<>();  
-
-	public ZoneDeJeu() {
-		pileLimites = new ArrayList<>();
-		pileBataille = new ArrayList<>();
-		collectionBornes = new ArrayList<>();
-	}
-	
-//	public int donnerLimitationVitesse() {
-//		if (pileLimites.isEmpty() || estPrioritaire())
-//			return 200;
-//		else if (getSommetLimite() instanceof DebutLimite)
-//			return 50;
-//		return 200;
-//	}
 	
 	public int donnerLimitationVitesse() {
-		return (estPrioritaire() || pileLimites.isEmpty() 
-				|| getSommetLimite() instanceof DebutLimite ? 200 : 50);
+		if (pileLimites.isEmpty() || estPrioritaire())
+			return 200;
+		else if (getSommetLimite() instanceof DebutLimite)
+			return 50;
+		return 200;
 	}
+	
 	
 	public Carte getSommetLimite() {
 		if (pileLimites.isEmpty())
 			return null;
 		
-		return pileLimites.get(pileLimites.size() - 1);
+		return pileLimites.get(0);
 	}
 	
 	public Bataille getSommetBataille() {
 		if (pileBataille.isEmpty())
 			return null;
 
-		return pileBataille.get(pileBataille.size() - 1);
+		return pileBataille.get(0);
 	}
 	
 	
@@ -60,9 +51,9 @@ public class ZoneDeJeu {
 	
 	public void deposer(Carte carte) {
 		if (carte instanceof Limite lim)
-			pileLimites.add(lim);
+			pileLimites.add(0, lim);
 		else if (carte instanceof Bataille bat)
-			pileBataille.add(bat);
+			pileBataille.add(0, bat);
 		else if (carte instanceof Borne bor)
 			collectionBornes.add(bor);
 		else if (carte instanceof Botte bot) 

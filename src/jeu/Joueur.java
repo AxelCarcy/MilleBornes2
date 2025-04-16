@@ -1,15 +1,19 @@
 package jeu;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import cartes.Carte;
 
 public class Joueur {
 	private String nom;
-	private ZoneDeJeu zoneDeJeu;
-	private MainJoueur mainJoueur;
+	private ZoneDeJeu zoneDeJeu= new ZoneDeJeu();
+	private MainJoueur mainJoueur = new MainJoueur();
 
 	public Joueur(String nom) {
 		this.nom = nom;
-		zoneDeJeu = new ZoneDeJeu();
 	}
 	
 	@Override
@@ -17,6 +21,18 @@ public class Joueur {
 		return nom;
 	}
 	
+	public String getNom() {
+		return nom;
+	}
+
+	public ZoneDeJeu getZoneDeJeu() {
+		return zoneDeJeu;
+	}
+
+	public MainJoueur getMainJoueur() {
+		return mainJoueur;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Joueur joueur) {
@@ -49,5 +65,32 @@ public class Joueur {
 	
 	public boolean estDepotAutorise(Carte carte) {
 		return zoneDeJeu.estDepotAutorise(carte);
+	}
+	
+	public Set<Coup> coupsPossibles(Set<Joueur> participants) {
+		Set<Coup> coupPossibles = new HashSet<>();
+		
+		List<Carte> listeCarteEnMain = mainJoueur.getMain();
+		
+		for(Carte carte : listeCarteEnMain) {
+			for (Joueur jouerCible : participants) {
+				Coup coup = new Coup(this, carte, jouerCible);
+				if (coup.estValide())
+					coupPossibles.add(coup);
+			}
+		}
+		return coupPossibles;
+	}
+	
+	public Set<Coup> coupsDefausse() {
+		Set<Coup> coupsDefausse = new HashSet<Coup>();
+
+		List<Carte> listeCarteEnMain = mainJoueur.getMain();
+
+		for (Carte carte : listeCarteEnMain) {
+			Coup coup = new Coup(this, carte, null);
+			coupsDefausse.add(coup);
+		}
+		return coupsDefausse;
 	}
 }

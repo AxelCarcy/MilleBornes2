@@ -1,5 +1,7 @@
 package cartes;
 
+import java.util.Objects;
+
 public abstract class Probleme extends Carte {
 	private Type type;
 	
@@ -38,12 +40,30 @@ public abstract class Probleme extends Carte {
 			break;
 		}
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(type);
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Probleme probleme) {
-			return super.equals(probleme);
+		if (obj != null && getClass() == obj.getClass()){
+		return type == ((Probleme)obj).type;
 		}
 		return false;
 	}
+	
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (obj instanceof Probleme probleme) {
+//			return super.equals(probleme);
+//		}
+//		return false;
+//	}
+	
+	
 }

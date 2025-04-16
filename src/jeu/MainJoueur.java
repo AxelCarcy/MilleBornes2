@@ -6,11 +6,9 @@ import java.util.List;
 import cartes.Carte;
 
 public class MainJoueur {
-	private List<Carte> main;
+	private List<Carte> main = new ArrayList<>();
+
 	
-	public MainJoueur() {
-		main = new ArrayList<>();
-	}
 	
 	void prendre(Carte carte) {
 		main.add(carte);
@@ -28,6 +26,10 @@ public class MainJoueur {
 			chaine.append(carte).append(" ");
 		}
 		return chaine.toString();
+	}
+	
+	public List<Carte> getMain() {
+		return main;
 	}
 	
 	
